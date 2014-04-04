@@ -23,7 +23,7 @@
 			"<esc><esc><enter><wait>",
 			"/install/vmlinuz",
 			" noapic",
-			" preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu.cfg",
+			" preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu-10.04.4-preseed.cfg",
 			" debian-installer=en_US",
 			" auto",
 			" locale=en_US",
