@@ -1,10 +1,9 @@
 {
-{
 	"variables": {
 		"provisioner": "provisionerless",
 		"provisioner_version": "",
     "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.4-server-amd64.iso",
-    "iso_checksum": "3aeb42816253355394897ae80d99a9ba56217c0e98e05294b51f0f5b13bceb54",
+    "iso_checksum": "3aeb42816253355394897ae80d99a9ba56217c0e98e05294b51f0f5b13bceb54"
 	},
   "builders": [{
     "vm_name": "ubuntu-12.04.4-server-amd64",
@@ -53,7 +52,7 @@
       "PROVISIONER={{user `provisioner`}}",
       "PROVISIONER_VERSION={{user `provisioner_version`}}"
     ],
-    "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+    "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
     "scripts": [
 			"script/base.sh",
 			"script/vagrant.sh",
@@ -62,7 +61,7 @@
 			"script/cleanup.sh",
 			"script/zerodisk.sh"
     ]
-  }]
+  }],
 	"post-processors": [{
 		"type": "vagrant",
 		"keep_input_artifact": false,
