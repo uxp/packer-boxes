@@ -1,0 +1,71 @@
+{
+{
+	"variables": {
+		"provisioner": "provisionerless",
+		"provisioner_version": "",
+    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04-beta2-server-amd64.iso",
+    "iso_checksum": "d0c6819a36344053455cac081f37718e7fabe89643e2c8e0153ad67a24b730e3",
+	},
+  "builders": [{
+    "vm_name": "ubuntu-12.04.4-server-amd64",
+    "type": "vmware-iso",
+		"guest_os_type": "Ubuntu_64",
+		"http_directory": "http",
+		"iso_url": "{{user `iso_url`}}",
+		"iso_checksum": "{{user `iso_checksum`}}",
+    "iso_checksum_type": "sha256",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "1200s",
+    "tools_upload_flavor": "linux",
+    "headless": true,
+    "boot_wait": "5s",
+    "boot_command": [
+      "<esc><esc><enter><wait>",
+      " /install/vmlinuz",
+      " noapic",
+      " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-14.04-beta2-preseed.cfg",
+      " debian-installer=en_US",
+      " auto",
+      " locale=en_US",
+      " kbd-chooser/method=us",
+      " hostname=vagrant",
+      " fb=false",
+      " debconf/frontend=noninteractive",
+      " keyboard-configuration/modelcode=SKIP",
+      " keyboard-configuration/layout=USA",
+      " keyboard-configuration/variant=USA",
+      " console-setup/ask_detect=false",
+      " initrd=/install/initrd.gz --",
+      "<enter>"
+    ],
+    "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+    "disk_size": 10140,
+    "vmx_data": {
+			"memsize": "512",
+			"numvcpus": "1",
+			"cpuid.coresPerSocket": "1"
+    }
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "environment_vars": [
+      "PROVISIONER={{user `provisioner`}}",
+      "PROVISIONER_VERSION={{user `provisioner_version`}}"
+    ],
+    "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+    "scripts": [
+			"script/base.sh",
+			"script/vagrant.sh",
+			"script/vmtools.sh",
+			"script/provisioner.sh",
+			"script/cleanup.sh",
+			"script/zerodisk.sh"
+    ]
+  }]
+	"post-processors": [{
+		"type": "vagrant",
+		"keep_input_artifact": false,
+		"output": "{{.Provider}}/ubuntu-14.04-beta2-server-amd64.box"
+	}]
+}
