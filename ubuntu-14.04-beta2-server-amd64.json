@@ -1,13 +1,12 @@
 {
-{
 	"variables": {
 		"provisioner": "provisionerless",
 		"provisioner_version": "",
     "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04-beta2-server-amd64.iso",
-    "iso_checksum": "d0c6819a36344053455cac081f37718e7fabe89643e2c8e0153ad67a24b730e3",
+    "iso_checksum": "d0c6819a36344053455cac081f37718e7fabe89643e2c8e0153ad67a24b730e3"
 	},
   "builders": [{
-    "vm_name": "ubuntu-12.04.4-server-amd64",
+    "vm_name": "ubuntu-14.04-beta2-server-amd64",
     "type": "vmware-iso",
 		"guest_os_type": "Ubuntu_64",
 		"http_directory": "http",
@@ -53,7 +52,7 @@
       "PROVISIONER={{user `provisioner`}}",
       "PROVISIONER_VERSION={{user `provisioner_version`}}"
     ],
-    "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+    "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
     "scripts": [
 			"script/base.sh",
 			"script/vagrant.sh",
@@ -62,7 +61,7 @@
 			"script/cleanup.sh",
 			"script/zerodisk.sh"
     ]
-  }]
+  }],
 	"post-processors": [{
 		"type": "vagrant",
 		"keep_input_artifact": false,
