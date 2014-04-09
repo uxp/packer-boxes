@@ -8,7 +8,7 @@
 	"builders": [{
 		"vm_name": "ubuntu-10.04.4-server-amd64",
 		"type": "vmware-iso",
-		"guest_os_type": "Ubuntu_64",
+		"guest_os_type": "Ubuntu-64",
 		"http_directory": "http",
 		"iso_url": "{{user `iso_url`}}",
 		"iso_checksum": "{{user `iso_checksum`}}",
