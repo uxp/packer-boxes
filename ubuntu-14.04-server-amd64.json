@@ -2,11 +2,11 @@
 	"variables": {
 		"provisioner": "provisionerless",
 		"provisioner_version": "",
-    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04-beta2-server-amd64.iso",
-    "iso_checksum": "d0c6819a36344053455cac081f37718e7fabe89643e2c8e0153ad67a24b730e3"
+    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04-server-amd64.iso",
+    "iso_checksum": "ababb88a492e08759fddcf4f05e5ccc58ec9d47fa37550d63931d0a5fa4f7388"
 	},
   "builders": [{
-    "vm_name": "ubuntu-14.04-beta2-server-amd64",
+    "vm_name": "ubuntu-14.04-server-amd64",
     "type": "vmware-iso",
 		"guest_os_type": "Ubuntu-64",
 		"http_directory": "http",
@@ -23,7 +23,7 @@
       "<esc><esc><enter><wait>",
       " /install/vmlinuz",
       " noapic",
-      " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-14.04-beta2-preseed.cfg",
+      " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-14.04-preseed.cfg",
       " debian-installer=en_US",
       " auto",
       " locale=en_US",
@@ -65,6 +65,6 @@
 	"post-processors": [{
 		"type": "vagrant",
 		"keep_input_artifact": false,
-		"output": "{{.Provider}}/ubuntu-14.04-beta2-server-amd64.box"
+		"output": "{{.Provider}}/ubuntu-14.04-server-amd64.box"
 	}]
 }
