@@ -13,8 +13,8 @@ if [[ $PACKER_BUILDER_TYPE =~ vmware ]]; then
     umount /mnt/cdrom
     rmdir /mnt/cdrom
 
-    apt-get -y remove linux-headers-$(uname -r) build-essential perl
-    apt-get -y autoremove
+#    apt-get -y remove linux-headers-$(uname -r) build-essential perl
+#    apt-get -y autoremove
 fi
 
 if [[ $PACKER_BUILDER_TYPE =~ virtualbox ]]; then

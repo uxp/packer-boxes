@@ -61,7 +61,7 @@ d-i user-setup/allow-password-weak boolean true
 
 ## minimum is puppet and ssh and ntp
 # Individual additional packages to install
-d-i pkgsel/include string openssh-server ntp
+d-i pkgsel/include string openssh-server ntp curl
 
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
