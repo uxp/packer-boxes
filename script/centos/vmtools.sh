@@ -9,7 +9,7 @@ if [[ $PACKER_BUILDER_TYPE =~ vmware ]]; then
     # Mount the disk image
     cd /tmp
     mkdir /tmp/isomount
-    mount -t iso9660 -o loop /root/linux.iso /tmp/isomount
+    mount -t iso9660 -o loop /home/vagrant/linux.iso /tmp/isomount
 
     # Install the drivers
     cp /tmp/isomount/VMwareTools-*.gz /tmp
