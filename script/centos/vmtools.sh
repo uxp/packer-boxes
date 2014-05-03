@@ -4,7 +4,7 @@ if [[ $PACKER_BUILDER_TYPE =~ vmware ]]; then
     echo "Installing VMware Tools"
 
     # Make sure perl is available
-    yum -y install perl
+    yum install perl gcc make kernel-headers kernel-devel fuse-libs -y
 
     # Mount the disk image
     cd /tmp
@@ -17,8 +17,8 @@ if [[ $PACKER_BUILDER_TYPE =~ vmware ]]; then
     ./vmware-tools-distrib/vmware-install.pl -d
 
     # Cleanup
-    umount isomount
-    rm -rf isomount /root/linux.iso VMwareTools*.gz vmware-tools-distrib
+    umount /tmp/isomount
+    rm -rf /tmp/isomount /root/linux.iso VMwareTools*.gz vmware-tools-distrib /home/vagrant/linux.iso
 
 fi
 
