@@ -43,6 +43,7 @@
 			"script/centos/vagrant.sh",
 			"script/centos/vmtools.sh",
 			"script/centos/provisioner.sh",
+                        "script/centos/networking.sh",
 			"script/centos/cleanup.sh",
 			"script/centos/zerodisk.sh"
     ]
