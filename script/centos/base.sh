@@ -13,3 +13,6 @@ service ntpd start
 chkconfig sshd on
 #chkconfig iptables off
 #chkconfig ip6tables off
+
+#Comment out requiretty in /etc/sudoers. 
+sed -i 's/^\(Defaults.*requiretty\)/#\1/' /etc/sudoers
