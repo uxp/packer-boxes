@@ -1,3 +1,16 @@
+These templates assume a few things. 
+* VMware Fusion 6.0.3
+* [Packer 6.0](https://github.com/CorbanR/packer), build from my fork 
+
+
+If you run the esxi templates, you will need to run as sudo. Not 100% sure why, but it won't make the necessarynetworking chnages otherwise.  
+
+```
+sudo packer build esxi-5.5-amd64.json
+```
+
+
+
 * File http/centos-6.5-preseed.cfg is 
 
 ```text
