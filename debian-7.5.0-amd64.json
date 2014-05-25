@@ -2,43 +2,35 @@
 	"variables": {
 		"provisioner": "provisionerless",
 		"provisioner_version": "",
-		"iso_url": "http://releases.ubuntu.com/lucid/ubuntu-10.04.4-server-amd64.iso",
-		"iso_checksum": "3de19967318906fd57252ef67ed3ad411b89e3ea6b81205e26517530d7a8cd0b"
+		"iso_url": "http://cdimage.debian.org/cdimage/release/current/amd64/iso-dvd/debian-7.5.0-amd64-DVD-1.iso",
+		"iso_checksum": "de237936673262aaaabbbb0dbc6d776ec6b663f2f699ea2ec25e68ea8a747fa2"
 	},
 	"builders": [{
-		"vm_name": "ubuntu-10.04.4-server-amd64",
+		"vm_name": "debian-7.5.0-amd64",
 		"type": "vmware-iso",
-		"guest_os_type": "Ubuntu-64",
+		"guest_os_type": "debian7-64",
 		"http_directory": "http",
 		"iso_url": "{{user `iso_url`}}",
 		"iso_checksum": "{{user `iso_checksum`}}",
 		"iso_checksum_type": "sha256",
 		"ssh_username": "vagrant",
 		"ssh_password": "vagrant",
-		"ssh_wait_timeout": "1200s",
+		"ssh_wait_timeout": "10000s",
 		"tools_upload_flavor": "linux",
 		"headless": true,
-		"boot_wait": "5s",
 		"boot_command": [
-			"<esc><esc><enter><wait>",
-			"/install/vmlinuz",
-			" noapic",
-			" preseed/url=http://{{.HTTPIP}}:{{.HTTPPort}}/ubuntu-10.04.4-preseed.cfg",
-			" debian-installer=en_US",
+			"<esc><wait>",
+			"install",
 			" auto",
+			" url=http://{{.HTTPIP}}:{{.HTTPPort}}/preseed.cfg",
+			" debian-installer=en_US",
 			" locale=en_US",
-			" kbd-chooser/method-us",
-			" hostname=vagrant",
-			" fb=false",
-			" debconf/frontend=noninteractive",
-			" keyboard-configuration/modelcode=SKIP",
-			" keyboard-configuration/layout=USA",
-			" keyboard-configuration/variant=USA",
-			" console-setup/ask_detect=false",
-			" initrd=/install/initrd.gz -- ",
+			" keymap=us",
+			" netcfg/get_hostname=vagrant",
+			" netcfg/get_domain=vm ",
 			"<enter>"
 		],
-		"shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+		"shutdown_command": "echo 'vagrant' | sudo -S shutdown -h now",
 		"disk_size": 10140,
 		"vmx_data": {
 			"memsize": "512",
@@ -65,6 +57,6 @@
 	"post-processors": [{
 		"type": "vagrant",
 		"keep_input_artifact": false,
-		"output": "{{.Provider}}/ubuntu-10.04.4-server-amd64.box"
+		"output": "{{.Provider}}/debian-7.5.0-amd64.box"
 	}]
 }

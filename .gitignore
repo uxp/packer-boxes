@@ -1,3 +1,6 @@
 packer_cache/
 output-vmware-iso/
 tmp/*
+vmware/
+iso/
+*.swp

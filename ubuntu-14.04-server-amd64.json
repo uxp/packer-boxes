@@ -2,11 +2,11 @@
 	"variables": {
 		"provisioner": "provisionerless",
 		"provisioner_version": "",
-    "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.4-server-amd64.iso",
-    "iso_checksum": "3aeb42816253355394897ae80d99a9ba56217c0e98e05294b51f0f5b13bceb54"
+    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04-server-amd64.iso",
+    "iso_checksum": "ababb88a492e08759fddcf4f05e5ccc58ec9d47fa37550d63931d0a5fa4f7388"
 	},
   "builders": [{
-    "vm_name": "ubuntu-12.04.4-server-amd64",
+    "vm_name": "ubuntu-14.04-server-amd64",
     "type": "vmware-iso",
 		"guest_os_type": "Ubuntu-64",
 		"http_directory": "http",
@@ -21,23 +21,25 @@
     "boot_wait": "5s",
     "boot_command": [
       "<esc><esc><enter><wait>",
-      " /install/vmlinuz",
-      " noapic",
-      " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-12.04.4-preseed.cfg",
-      " debian-installer=en_US",
-      " auto",
-      " locale=en_US",
-      " kbd-chooser/method=us",
-      " hostname=vagrant",
-      " fb=false",
+      "/install/vmlinuz auto",
+      " console-setup/ask_detect=false",
+      " console-setup/layoutcode=us",
+      " console-setup/modelcode=pc105",
       " debconf/frontend=noninteractive",
-      " keyboard-configuration/modelcode=SKIP",
+      " debian-installer=en_US",
+      " fb=false",
+      " initrd=/install/initrd.gz",
+      " kbd-chooser/method=us",
       " keyboard-configuration/layout=USA",
       " keyboard-configuration/variant=USA",
-      " console-setup/ask_detect=false",
-      " initrd=/install/initrd.gz --",
-      "<enter>"
-    ],
+      " locale=en_US",
+      " netcfg/get_domain=vm",
+      " netcfg/get_hostname=vagrant",
+      " noapic" ,
+      " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-14.04-preseed.cfg",
+      " -- ",
+      "<enter>"    
+   ],
     "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
     "disk_size": 10140,
     "vmx_data": {
@@ -65,6 +67,6 @@
 	"post-processors": [{
 		"type": "vagrant",
 		"keep_input_artifact": false,
-		"output": "{{.Provider}}/ubuntu-12.04.4-server-amd64.box"
+		"output": "{{.Provider}}/ubuntu-14.04-server-amd64.box"
 	}]
 }
