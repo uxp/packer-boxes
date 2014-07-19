@@ -1,43 +1,65 @@
 {
-  "variables": {
-    "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO",
-    "iso_checksum_type": "sha256",
-    "iso_checksum": "6471a3f35b00040f0e6fe773bdbbbe82c74bdb1ead3aeb8e6a414985b39af7a6"
-  },
-  "builders": [{
-    "type": "vmware-iso",
-    "guest_os_type": "windows8srv-64",
-    "vm_name": "windows-server-2012-r2",
-    "iso_url": "{{user `iso_url`}}",
-    "iso_checksum_type": "{{user `iso_checksum_type`}}",
-    "iso_checksum": "{{user `iso_checksum`}}",
-    "headless": false,
-    "ssh_username": "vagrant",
-    "ssh_password": "vagrant",
-		"ssh_wait_timeout": "43200s",
-    "tools_upload_flavor": "windows",
-    "boot_wait": "300s",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Halting\"",
-    "disk_size": 61440,
-    "floppy_files": [
-      "./http/windows-server-2012-r2/Autounattend.xml",
-      "./script/windows/microsoft-updates.bat",
-      "./script/windows/windows-updates.ps1",
-      "./script/windows/pragmasshd.ps1",
-      "./script/windows/guest-tools.bat",
-      "./script/windows/compact.bat"
-    ],
-    "vmx_data": {
-      "RemoteDisplay.vnc.enabled": false,
-      "RemoteDisplay.vnc.port": 5900,
-      "memsize": "2048",
-      "numvcpus": "2",
-      "scsi0.virtualdev": "lsisas1068"
-    }
-  }],
-  "post-processors": [{
-    "type": "vagrant",
-    "keep_input_artifact": false,
-    "output": "{{.Provider}}/windows-server-2012-r2.box"
-  }]
+    "variables": {
+        "name": "win-server-2012-r2-std",
+        "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO",
+        "iso_checksum_type": "sha256",
+        "iso_checksum": "6471a3f35b00040f0e6fe773bdbbbe82c74bdb1ead3aeb8e6a414985b39af7a6",
+        "sqlserver": "http://download.microsoft.com/download/8/D/D/8DD7BDBA-CEF7-4D8E-8C16-D9F69527F909/ENU/x64/SQLEXPRWT_x64_ENU.exe"
+    },
+    "builders": [{
+        "type": "vmware-iso",
+        "guest_os_type": "windows8srv-64",
+        "vm_name": "{{user `name`}}",
+        "iso_url": "{{user `iso_url`}}",
+        "iso_checksum_type": "{{user `iso_checksum_type`}}",
+        "iso_checksum": "{{user `iso_checksum`}}",
+        "boot_wait": "120s",
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_wait_timeout": "7200s",
+        "tools_upload_flavor": "windows",
+        "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Halting'",
+        "disk_size": 61440,
+        "floppy_files": [
+            "./http/{{user `name`}}/Autounattend.xml",
+            "./script/windows/00-run-all-scripts.cmd",
+            "./script/windows/install-winrm.cmd",
+            "./script/windows/powerconfig.bat",
+            "./script/windows/01-install-wget.cmd",
+            "./script/windows/_download.bat",
+            "./script/windows/_packer_config.cmd",
+            "./script/windows/chpasswd.bat",
+            "./script/windows/openssl.bat",
+            "./script/windows/zz-start-sshd.cmd"
+        ],
+        "vmx_data": {
+            "RemoteDisplay.vnc.enabled": "false",
+            "RemoteDisplay.vnc.port": "5900",
+            "memsize": "2048",
+            "numvcpus": "2",
+            "scsi0.virtualdev": "lsisas1068"
+        }
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "remote_path": "/tmp/script.bat",
+        "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+        "scripts": [
+            "script/vagrant.bat",
+            "script/vmtools.bat"
+            "script/cleanup.bat",
+            "script/zerodisk.bat"
+        ]
+    }, {
+        "type": "shell",
+        "inline": [
+            "rm -f /tmp/script.bat"
+        ]
+    }],
+    "post-processors": [{
+        "type": "vagrant",
+        "keep_input_artifact": false,
+        "output": "{{.Provider}}/{{user `name`}}.box",
+        "vagrantfile_template": "{{user `name`}}.vagrantfile"
+    }]
 }
