@@ -15,7 +15,7 @@
                 <OSImage>
                     <InstallFrom>
                         <MetaData wcm:action="add">
-                            <Key>/IMAGE/NAME</Key>
+                            <Key>/IMAGE/NAME </Key>
                             <Value>Windows Server 2012 R2 SERVERSTANDARD</Value>
                         </MetaData>
                     </InstallFrom>
@@ -27,7 +27,7 @@
             </ImageInstall>
             <UserData>
                 <ProductKey>
-                    <Key>D2N9P-3P6X9-2R39C-7RTCD-MDVJX</Key>
+                    <!-- <Key>D2N9P-3P6X9-2R39C-7RTCD-MDVJX</Key> -->
                     <WillShowUI>OnError</WillShowUI>
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
@@ -37,7 +37,7 @@
                     <CreatePartitions>
                         <CreatePartition wcm:action="add">
                             <Order>1</Order>
-                            <Size>20000</Size>
+                            <Size>60000</Size>
                             <Type>Primary</Type>
                         </CreatePartition>
                     </CreatePartitions>
@@ -151,5 +151,5 @@
             <EnableLUA>false</EnableLUA>
         </component>
     </settings>
-    <cpi:offlineImage cpi:source="wim:c:/users/misheska/sources/win2012r2/install.wim#Windows Server 2012 R2 SERVERSTANDARD" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+    <cpi:offlineImage cpi:source="wim:c:/wim/install.wim#Windows Server 2012 R2 SERVERSTANDARD" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>

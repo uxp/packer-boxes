@@ -46,7 +46,7 @@
         "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
         "scripts": [
             "script/vagrant.bat",
-            "script/vmtools.bat"
+            "script/vmtools.bat",
             "script/cleanup.bat",
             "script/zerodisk.bat"
         ]
@@ -60,6 +60,6 @@
         "type": "vagrant",
         "keep_input_artifact": false,
         "output": "{{.Provider}}/{{user `name`}}.box",
-        "vagrantfile_template": "{{user `name`}}.vagrantfile"
+        "vagrantfile_template": "vagrantfiles/{{user `name`}}"
     }]
 }
