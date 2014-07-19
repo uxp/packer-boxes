@@ -59,7 +59,8 @@
     "post-processors": [{
         "type": "vagrant",
         "keep_input_artifact": false,
+        "compression_level": 1,
         "output": "{{.Provider}}/{{user `name`}}.box",
-        "vagrantfile_template": "vagrantfiles/{{user `name`}}"
+        "vagrantfile_template": "./vagrantfiles/win-server-2012-r2-std"
     }]
 }
