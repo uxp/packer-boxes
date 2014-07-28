@@ -6,6 +6,9 @@ echo ==^> Turning off User Account Control (UAC)
 :: see http://www.howtogeek.com/howto/windows-vista/enable-or-disable-uac-from-the-windows-vista-command-line/
 cmd.exe /c reg ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
 
+cmd.exe /c powershell -Command "Enable-PSRemoting -Force" <NUL
+@if errorlevel 1 echo ERROR: The previous command returned error %ERRORLEVEL%
+
 cmd.exe /c powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force" <NUL
 @if errorlevel 1 echo ERROR: The previous command returned error %ERRORLEVEL%
 
@@ -46,6 +49,9 @@ cmd.exe /c winrm set winrm/config/client/auth @{Basic="true"}
 @if errorlevel 1 echo ERROR: The previous command returned error %ERRORLEVEL%
 
 cmd.exe /c winrm set winrm/config/listener?Address=*+Transport=HTTP @{Port="5985"}
+@if errorlevel 1 echo ERROR: The previous command returned error %ERRORLEVEL%
+
+cmd.exe /c powershell -Command "Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP-PUBLIC' -RemoteAddress Any" <NUL
 @if errorlevel 1 echo ERROR: The previous command returned error %ERRORLEVEL%
 
 cmd.exe /c netsh advfirewall firewall set rule group="remote administration" new enable=yes
